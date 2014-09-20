@@ -12,7 +12,7 @@ var remote = 'ws://ws.lightningmaps.org',
 // composed of both the token and their region for notification
 var subscribers = [];
 
-var sendStrike = function (data) {
+var sendStrike = function (token, data) {
     var req = https.request({
         hostname: 'api.pushbullet.com',
         port: 443,
@@ -57,7 +57,7 @@ ws.on('message', function(message) {
         });
 
         if (!_.isEmpty(inside)) {
-            sendStrike(JSON.stringify(inside));
+            sendStrike(subscriber.token, JSON.stringify(inside));
         }
     }, function(err) {
         if (err) {
