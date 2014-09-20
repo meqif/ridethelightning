@@ -55,7 +55,6 @@ app.post('/api/v1/subscribe', function(req, res) {
             longitude: req.param('location').longitude
         });
         res.json({message: 'Successfully subscribed'});
-        console.log("subscribers: ", subscribers);
     } else {
         res.status(400).json({error: 'Invalid request body'});
     }
@@ -71,7 +70,6 @@ app.post('/api/v1/unsubscribe', function(req, res) {
         } else {
             res.status(400).json({message: 'Subscriber does not exist'});
         }
-        console.log("subscribers: ", subscribers);
     } else {
         res.status(400).json({message: 'Invalid request body'});
     }
