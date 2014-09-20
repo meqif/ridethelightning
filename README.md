@@ -11,6 +11,10 @@ Now you can receive notifications on your phone when a thunderstorm is approachi
 4. Register your client
 5. Enjoy ⚡️
 
+## Notes
+
+Be careful with the radius: since there is no pacing or strike grouping mechanisms yet, the poor subscriber might get hammered with notifications.
+
 ## License
 
 [MIT](LICENSE)
