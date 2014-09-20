@@ -75,7 +75,9 @@ app.use(bodyParser.json());
 
 app.post('/api/v1/subscribe', function(req, res) {
     if (req.param('token')) {
+        subscribers.push({token: req.param('token')});
         res.json({message: 'Successfully subscribed'});
+        console.log("subscribers: ", subscribers);
     } else {
         res.status(400).json({error: 'Invalid request body'});
     }
@@ -84,6 +86,8 @@ app.post('/api/v1/subscribe', function(req, res) {
 app.post('/api/v1/unsubscribe', function(req, res) {
     if (req.param('token')) {
         res.json({message: 'Successfully unsubscribed'});
+        subscribers = _.without(subscribers, _.findWhere(subscribers, { 'token': req.param('token') }));
+        console.log("subscribers: ", subscribers);
     } else {
         res.status(400).json({error: 'Invalid request body'});
     }
