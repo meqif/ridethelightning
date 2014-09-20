@@ -45,12 +45,8 @@ var sendStrike = function (token, data) {
     req.end();
 };
 
-ws.on('open', function() {});
-
-ws.on('message', function(message) {
-    var data = JSON.parse(message);
-
-    async.each(subscribers, function(subscriber) {
+var sendStrikesToSubscriber = function(data) {
+    return function(subscriber) {
         var inside = _.filter(data.strokes, function(stroke) {
             return geo.isPointInCircle(
                 { latitude: stroke.lat, longitude: stroke.lon }, // stroke
@@ -62,13 +58,15 @@ ws.on('message', function(message) {
         if (!_.isEmpty(inside)) {
             sendStrike(subscriber.token, JSON.stringify(inside));
         }
-    }, function(err) {
-        if (err) {
-            console.log("Error detected: ", err);
-        } else {
-            console.log("Lightning strike notifications sent to all subscribers");
-        }
-    });
+    };
+};
+
+ws.on('open', function() {});
+
+ws.on('message', function(message) {
+    var data = JSON.parse(message);
+
+    async.each(subscribers, sendStrikesToSubscriber(data));
 });
 
 var app = express();
