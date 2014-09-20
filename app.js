@@ -12,7 +12,7 @@ var remote = 'ws://ws.lightningmaps.org',
 
 var subscribers = [];
 
-var sendStrike = function (token, data) {
+var sendStrike = function (token, strike) {
     var req = https.request({
         hostname: 'api.pushbullet.com',
         port: 443,
@@ -32,9 +32,9 @@ var sendStrike = function (token, data) {
     });
 
     req.write(JSON.stringify({
-        type: 'note',
+        type: 'address',
         title: 'Lightning strike',
-        body: data
+        address: strike.lat + ',' + strike.lon
     }));
 
     req.on('error', function(err) {
