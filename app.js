@@ -17,11 +17,8 @@ var remote = 'ws://ws.lightningmaps.org',
 
 var subscribers = [];
 
-ws.on('open', function() {});
-
 ws.on('message', function(message) {
     var data = JSON.parse(message);
-
     async.each(subscribers, push.sendStrikesToSubscriber(data));
 });
 
