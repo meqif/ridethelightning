@@ -75,10 +75,12 @@ var app = express();
 app.use(bodyParser.json());
 
 app.post('/api/v1/subscribe', function(req, res) {
-    if (req.param('token') &&
-        req.param('location') &&
-        req.param('location').latitude &&
-        req.param('location').longitude) {
+    var hasTokenAndLocation = req.param('token') &&
+            req.param('location') &&
+            req.param('location').latitude &&
+            req.param('location').longitude;
+
+    if (hasTokenAndLocation) {
         subscribers.push({
             token: req.param('token'),
             latitude: req.param('location').latitude,
