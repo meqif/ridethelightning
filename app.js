@@ -7,6 +7,10 @@ var WebSocket = require('ws'),
     morgan = require('morgan'),
     push = require('./lib/push');
 
+/*
+ * Subscribe to updates on lightningmaps and multicast them over to our
+ * subscribers.
+ */
 
 var remote = 'ws://ws.lightningmaps.org',
     ws = new WebSocket(remote);
@@ -21,6 +25,9 @@ ws.on('message', function(message) {
     async.each(subscribers, push.sendStrikesToSubscriber(data));
 });
 
+/*
+ * API for clients to subscribe to updates
+ */
 var app = express();
 
 // setup body parser
