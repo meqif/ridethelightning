@@ -54,9 +54,7 @@ var sendStrikesToSubscriber = function(data) {
             );
         });
 
-        if (!_.isEmpty(inside)) {
-            sendStrike(subscriber.token, JSON.stringify(inside));
-        }
+        _.each(inside, function(strike) { sendStrike(subscriber.token, strike); });
     };
 };
 
