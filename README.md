@@ -10,3 +10,7 @@ Now you can receive notifications on your phone when a thunderstorm is approachi
 3. `npm start`
 4. Register your client
 5. Enjoy ⚡️
+
+## License
+
+[MIT](LICENSE)
