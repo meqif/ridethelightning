@@ -74,8 +74,15 @@ var app = express();
 app.use(bodyParser.json());
 
 app.post('/api/v1/subscribe', function(req, res) {
-    if (req.param('token')) {
-        subscribers.push({token: req.param('token')});
+    if (req.param('token') &&
+        req.param('location') &&
+        req.param('location').latitude &&
+        req.param('location').longitude) {
+        subscribers.push({
+            token: req.param('token'),
+            latitude: req.param('location').latitude,
+            longitude: req.param('location').longitude
+        });
         res.json({message: 'Successfully subscribed'});
         console.log("subscribers: ", subscribers);
     } else {
