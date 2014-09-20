@@ -58,7 +58,7 @@ app.post('/api/v1/unsubscribe', function(req, res) {
         subscribers = _.without(subscribers, _.findWhere(subscribers, { 'token': req.param('token') }));
         console.log("subscribers: ", subscribers);
     } else {
-        res.status(400).json({error: 'Invalid request body'});
+        res.status(400).json({message: 'Invalid request body'});
     }
 });
 
