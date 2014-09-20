@@ -1,5 +1,7 @@
 # ridethelightning
 
+[![Build Status][travis-image]][travis-url]
+
 Bridge between [Lightningmaps.org](http://lightningmaps.org/) and Pushbullet subscribers.
 Now you can receive notifications on your phone when a thunderstorm is approaching or raging nearby. ⚡️
 
@@ -18,3 +20,6 @@ Be careful with the radius: since there is no pacing or strike grouping mechanis
 ## License
 
 [MIT](LICENSE)
+
+[travis-image]: https://img.shields.io/travis/meqif/ridethelightning.svg?style=flat
+[travis-url]: https://travis-ci.org/meqif/ridethelightning
