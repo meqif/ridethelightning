@@ -4,7 +4,8 @@ var WebSocket = require('ws'),
     geo = require('geolib'),
     async = require('async'),
     express = require('express'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    morgan = require('morgan');
 
 var remote = 'ws://ws.lightningmaps.org',
     ws = new WebSocket(remote);
@@ -73,6 +74,9 @@ var app = express();
 
 // setup body parser
 app.use(bodyParser.json());
+
+// setup logger
+app.use(morgan('combined'));
 
 app.post('/api/v1/subscribe', function(req, res) {
     var hasTokenAndLocation = req.param('token') &&
