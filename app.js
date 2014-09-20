@@ -1,7 +1,8 @@
 var WebSocket = require('ws'),
     https = require('https'),
     _ = require('underscore'),
-    async = require('async');
+    async = require('async'),
+    express = require('express');
 
 var remote = 'ws://ws.lightningmaps.org',
     ws = new WebSocket(remote);
@@ -64,4 +65,20 @@ ws.on('message', function(message) {
             console.log("Lightning strike notifications sent to all subscribers");
         }
     });
+});
+
+var app = express();
+
+app.post('/api/v1/subscribe', function(req, res) {
+    console.log("received ", req);
+    res.send(JSON.stringify({message: 'Hiya!'}));
+});
+
+app.post('/api/v1/unsubscribe', function(req, res) {
+    console.log("received ", req);
+    res.send(JSON.stringify({message: 'Bye!'}));
+});
+
+var server = app.listen(8080, function() {
+    console.log("Listening on port %d", server.address().port);
 });
