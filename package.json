@@ -4,6 +4,7 @@
   "description": "Bridge between lightningmaps.org and a set of subscribers",
   "main": "app.js",
   "scripts": {
+    "start": "node ./app.js",
     "test": "mocha -w -R nyan"
   },
   "author": "Ricardo Martins <ricardo at scarybox.net>",
@@ -20,5 +21,6 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "mocha": "^1.21.4"
-  }
+  },
+  "private": true
 }
