@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./app.js",
-    "test": "mocha -w -R nyan"
+    "test": "NODE_ENV=test mocha"
   },
   "author": "Ricardo Martins <ricardo at scarybox.net>",
   "license": "ISC",
