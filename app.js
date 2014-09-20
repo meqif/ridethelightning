@@ -54,8 +54,13 @@ app.post('/api/v1/subscribe', function(req, res) {
 
 app.post('/api/v1/unsubscribe', function(req, res) {
     if (req.param('token')) {
-        res.json({message: 'Successfully unsubscribed'});
-        subscribers = _.without(subscribers, _.findWhere(subscribers, { 'token': req.param('token') }));
+        var searchProperty = { token: req.param('token') };
+        if (_.contains(subscribers)) {
+            subscribers = _.without(subscribers, _.findWhere(subscribers, searchProperty));
+            res.json({message: 'Successfully unsubscribed'});
+        } else {
+            res.status(400).json({message: 'Subscriber does not exist'});
+        }
         console.log("subscribers: ", subscribers);
     } else {
         res.status(400).json({message: 'Invalid request body'});
