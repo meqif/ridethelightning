@@ -2,7 +2,8 @@ var WebSocket = require('ws'),
     https = require('https'),
     _ = require('underscore'),
     async = require('async'),
-    express = require('express');
+    express = require('express'),
+    bodyParser = require('body-parser');
 
 var remote = 'ws://ws.lightningmaps.org',
     ws = new WebSocket(remote);
@@ -47,7 +48,7 @@ ws.on('open', function() {});
 
 ws.on('message', function(message) {
     var data = JSON.parse(message);
-    console.log("received ", message);
+    // console.log("received ", message);
 
     async.each(subscribers, function(subscriber) {
         // subscriber == { token: '', region: '' }
@@ -69,14 +70,23 @@ ws.on('message', function(message) {
 
 var app = express();
 
+// setup body parser
+app.use(bodyParser.json());
+
 app.post('/api/v1/subscribe', function(req, res) {
-    console.log("received ", req);
-    res.send(JSON.stringify({message: 'Hiya!'}));
+    if (req.param('token')) {
+        res.json({message: 'Successfully subscribed'});
+    } else {
+        res.status(400).json({error: 'Invalid request body'});
+    }
 });
 
 app.post('/api/v1/unsubscribe', function(req, res) {
-    console.log("received ", req);
-    res.send(JSON.stringify({message: 'Bye!'}));
+    if (req.param('token')) {
+        res.json({message: 'Successfully unsubscribed'});
+    } else {
+        res.status(400).json({error: 'Invalid request body'});
+    }
 });
 
 var server = app.listen(8080, function() {
