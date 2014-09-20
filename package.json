@@ -9,6 +9,7 @@
   "author": "Ricardo Martins <ricardo at scarybox.net>",
   "license": "ISC",
   "dependencies": {
+    "async": "^0.9.0",
     "underscore": "^1.7.0",
     "ws": "^0.4.32"
   },
