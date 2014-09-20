@@ -40,6 +40,12 @@ app.post('/api/v1/subscribe', function(req, res) {
             req.param('location').longitude;
 
     if (hasTokenAndLocation) {
+        var searchProperty = { token: req.param('token') };
+        if (_.findWhere(subscribers, searchProperty)) {
+            subscribers = _.reject(subscribers, function(el) {
+                return el.token === req.param('token');
+            });
+        }
         subscribers.push({
             token: req.param('token'),
             latitude: req.param('location').latitude,
