@@ -1,7 +1,7 @@
 {
   "name": "ridethelightning",
   "version": "1.0.0",
-  "description": "Bridge between lightningmaps.org and a set of subscribers",
+  "description": "Bridge between lightningmaps.org and a set of subscribers on Pushbullet",
   "main": "app.js",
   "scripts": {
     "start": "node ./app.js",
