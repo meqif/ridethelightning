@@ -10,8 +10,6 @@ var WebSocket = require('ws'),
 var remote = 'ws://ws.lightningmaps.org',
     ws = new WebSocket(remote);
 
-// For now, each subscriber is merely their token, in the future they shall be
-// composed of both the token and their region for notification
 var subscribers = [];
 
 var sendStrike = function (token, data) {
