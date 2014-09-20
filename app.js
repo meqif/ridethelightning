@@ -27,11 +27,14 @@ ws.on('message', function(message) {
  */
 var app = express();
 
+var env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
+    // setup logger
+    app.use(morgan('combined'));
+}
+
 // setup body parser
 app.use(bodyParser.json());
-
-// setup logger
-app.use(morgan('combined'));
 
 app.post('/api/v1/subscribe', function(req, res) {
     var hasTokenAndLocation = req.param('token') &&
