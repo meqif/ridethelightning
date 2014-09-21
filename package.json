@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./app.js",
-    "test": "NODE_ENV=test mocha"
+    "test": "NODE_ENV=test mocha",
+    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "author": "Ricardo Martins <ricardo at scarybox.net>",
   "license": "ISC",
@@ -20,7 +21,10 @@
   },
   "devDependencies": {
     "chai": "^1.9.1",
+    "coveralls": "^2.11.1",
+    "istanbul": "^0.3.2",
     "mocha": "^1.21.4",
+    "mocha-lcov-reporter": "0.0.1",
     "nock": "^0.47.0",
     "supertest": "^0.13.0"
   },
