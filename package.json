@@ -21,6 +21,7 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "mocha": "^1.21.4",
+    "nock": "^0.47.0",
     "supertest": "^0.13.0"
   },
   "private": true
