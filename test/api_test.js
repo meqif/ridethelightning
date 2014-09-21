@@ -1,5 +1,4 @@
 var request = require('supertest'),
-    // chai = require('chai'),
     mocha = require('mocha');
 
 var app = require('../app').app;
