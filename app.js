@@ -27,6 +27,7 @@ ws.on('message', function(message) {
 var app = express();
 
 var env = process.env.NODE_ENV || 'development';
+/* istanbul ignore if */
 if (env === 'development') {
     // setup logger
     app.use(morgan('combined'));
