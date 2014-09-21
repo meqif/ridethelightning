@@ -6,10 +6,8 @@ var WebSocket = require('ws'),
     morgan = require('morgan'),
     push = require('./lib/push');
 
-/*
- * Subscribe to updates on lightningmaps and multicast them over to our
- * subscribers.
- */
+// Subscribe to updates on lightningmaps and multicast them over to our
+// subscribers.
 
 var remote = 'ws://ws.lightningmaps.org',
     ws = new WebSocket(remote);
@@ -21,21 +19,20 @@ ws.on('message', function(message) {
     async.each(subscribers, _.partial(push.sendStrikesToSubscriber, data));
 });
 
-/*
- * API for clients to subscribe to updates
- */
+// API for clients to subscribe to updates
 var app = express();
 
 var env = process.env.NODE_ENV || 'development';
 /* istanbul ignore if */
 if (env === 'development') {
-    // setup logger
+    // Setup logger
     app.use(morgan('combined'));
 }
 
-// setup body parser
+// Setup body parser
 app.use(bodyParser.json());
 
+// Handle subscriptions
 app.post('/api/v1/subscribe', function(req, res) {
     var hasTokenAndLocation = req.param('token') &&
             req.param('location') &&
@@ -60,6 +57,7 @@ app.post('/api/v1/subscribe', function(req, res) {
     }
 });
 
+// Handle unsubscriptions
 app.post('/api/v1/unsubscribe', function(req, res) {
     if (req.param('token')) {
         if (_.findWhere(subscribers, {token: req.param('token') })) {
@@ -75,6 +73,7 @@ app.post('/api/v1/unsubscribe', function(req, res) {
     }
 });
 
+// Launch server
 var server = app.listen(8080, function() {
     console.log("Express server listening on port %d in %s mode", server.address().port, env);
 });
