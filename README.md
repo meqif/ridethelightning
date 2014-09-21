@@ -1,6 +1,7 @@
 # ridethelightning
 
 [![Build Status][travis-image]][travis-url]
+[![Coverage Status](https://img.shields.io/coveralls/meqif/ridethelightning.svg)](https://coveralls.io/r/meqif/ridethelightning?branch=master)
 
 Bridge between [Lightningmaps.org](http://lightningmaps.org/) and Pushbullet subscribers.
 Now you can receive notifications on your phone when a thunderstorm is approaching or raging nearby. ⚡️
