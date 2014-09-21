@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./app.js",
     "test": "NODE_ENV=test mocha",
-    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "NODE_ENV=testing istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "author": "Ricardo Martins <ricardo at scarybox.net>",
   "license": "ISC",
