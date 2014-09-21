@@ -24,7 +24,7 @@ describe('sendStrikesToSubscriber', function() {
             }})
             .post('/v2/pushes')
             .reply(200);
-        push.sendStrikesToSubscriber({strokes: strikes})(subscriber);
+        push.sendStrikesToSubscriber({strokes: strikes}, subscriber);
         scope.done();
         done();
     });

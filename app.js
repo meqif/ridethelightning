@@ -18,7 +18,7 @@ var subscribers = [];
 
 ws.on('message', function(message) {
     var data = JSON.parse(message);
-    async.each(subscribers, push.sendStrikesToSubscriber(data));
+    async.each(subscribers, _.partial(push.sendStrikesToSubscriber, data));
 });
 
 /*
