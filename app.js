@@ -74,6 +74,7 @@ app.post('/api/v1/unsubscribe', function(req, res) {
 });
 
 // Launch server
+/* istanbul ignore next */
 var server = app.listen(8080, function() {
     console.log("Express server listening on port %d in %s mode", server.address().port, env);
 });
