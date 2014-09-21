@@ -1,5 +1,4 @@
 var WebSocket = require('ws'),
-    https = require('https'),
     _ = require('underscore'),
     async = require('async'),
     express = require('express'),
