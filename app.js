@@ -60,8 +60,10 @@ if (env === 'development') {
 // Setup body parser
 app.use(bodyParser.json());
 
+var router = express.Router();
+
 // Handle subscriptions
-app.post('/api/v1/subscribe', function(req, res) {
+router.post('/subscribe', function(req, res) {
     var hasTokenAndLocation = req.param('token') &&
             req.param('location') &&
             req.param('location').latitude &&
@@ -80,7 +82,7 @@ app.post('/api/v1/subscribe', function(req, res) {
 });
 
 // Handle unsubscriptions
-app.post('/api/v1/unsubscribe', function(req, res) {
+router.post('/unsubscribe', function(req, res) {
     if (req.param('token')) {
         if (subscribers.remove(req.param('token'))) {
             res.json({message: 'Successfully unsubscribed'});
@@ -91,6 +93,8 @@ app.post('/api/v1/unsubscribe', function(req, res) {
         res.status(400).json({message: 'Invalid request body'});
     }
 });
+
+app.use('/api/v1', router);
 
 // Launch server
 /* istanbul ignore next */
