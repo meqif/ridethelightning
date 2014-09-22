@@ -1,7 +1,7 @@
 var request = require('supertest'),
     mocha = require('mocha');
 
-var app = require('../app').app;
+var app = require('../app');
 
 describe('POST /api/v1/subscribe', function() {
     it('responds with json', function(done) {
