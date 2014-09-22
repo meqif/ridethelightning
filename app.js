@@ -1,20 +1,18 @@
-var WebSocket = require('ws'),
-    _ = require('underscore'),
-    async = require('async'),
-    express = require('express'),
-    bodyParser = require('body-parser'),
-    morgan = require('morgan'),
-    push = require('./lib/push');
+var _             = require('underscore'),
+    async         = require('async'),
+    express       = require('express'),
+    bodyParser    = require('body-parser'),
+    morgan        = require('morgan'),
+    lightningMaps = require('./lib/lightningmaps'),
+    push          = require('./lib/push');
 
 // Subscribe to updates on lightningmaps and multicast them over to our
 // subscribers.
 
-var remote = 'ws://ws.lightningmaps.org',
-    ws = new WebSocket(remote);
-
 var subscribers = [];
 
-ws.on('message', function(message) {
+var lightningmaps = new lightningMaps();
+lightningmaps.on('message', function(message) {
     var data = JSON.parse(message);
     async.each(subscribers, _.partial(push.sendStrikesToSubscriber, data));
 });
