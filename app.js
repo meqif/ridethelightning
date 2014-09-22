@@ -6,10 +6,40 @@ var _             = require('underscore'),
     lightningMaps = require('./lib/lightningmaps'),
     push          = require('./lib/push');
 
+var subscribers = (function() {
+    var subscribers = [];
+
+    return {
+        add: function(token, latitude, longitude) {
+            var searchProperty = { token: token };
+            if (_.findWhere(subscribers, searchProperty)) {
+                subscribers = _.reject(subscribers, function(el) {
+                    return el.token === token;
+                });
+            }
+            subscribers.push({
+                token: token,
+                latitude: latitude,
+                longitude: longitude
+            });
+        },
+
+        remove: function(token) {
+            var searchProperty = { token: token };
+            if (_.findWhere(subscribers, searchProperty)) {
+                subscribers = _.reject(subscribers, function(el) {
+                    return el.token === token;
+                });
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+})();
+
 // Subscribe to updates on lightningmaps and multicast them over to our
 // subscribers.
-
-var subscribers = [];
 
 var lightningmaps = new lightningMaps();
 lightningmaps.on('message', function(message) {
@@ -38,17 +68,11 @@ app.post('/api/v1/subscribe', function(req, res) {
             req.param('location').longitude;
 
     if (hasTokenAndLocation) {
-        var searchProperty = { token: req.param('token') };
-        if (_.findWhere(subscribers, searchProperty)) {
-            subscribers = _.reject(subscribers, function(el) {
-                return el.token === req.param('token');
-            });
-        }
-        subscribers.push({
-            token: req.param('token'),
-            latitude: req.param('location').latitude,
-            longitude: req.param('location').longitude
-        });
+        subscribers.add(
+            req.param('token'),
+            req.param('location').latitude,
+            req.param('location').longitude
+        );
         res.json({message: 'Successfully subscribed'});
     } else {
         res.status(400).json({error: 'Invalid request body'});
@@ -58,10 +82,7 @@ app.post('/api/v1/subscribe', function(req, res) {
 // Handle unsubscriptions
 app.post('/api/v1/unsubscribe', function(req, res) {
     if (req.param('token')) {
-        if (_.findWhere(subscribers, {token: req.param('token') })) {
-            subscribers = _.reject(subscribers, function(el) {
-                return el.token === req.param('token');
-            });
+        if (subscribers.remove(req.param('token'))) {
             res.json({message: 'Successfully unsubscribed'});
         } else {
             res.status(400).json({message: 'Subscriber does not exist'});
