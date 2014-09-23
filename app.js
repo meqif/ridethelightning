@@ -1,41 +1,13 @@
-var _             = require('underscore'),
-    async         = require('async'),
-    express       = require('express'),
-    bodyParser    = require('body-parser'),
-    morgan        = require('morgan'),
-    lightningMaps = require('./lib/lightningmaps'),
-    push          = require('./lib/push');
+var _              = require('underscore'),
+    async          = require('async'),
+    express        = require('express'),
+    bodyParser     = require('body-parser'),
+    morgan         = require('morgan'),
+    lightningMaps  = require('./lib/lightningmaps'),
+    push           = require('./lib/push'),
+    subscriberList = require('./lib/subscriberlist');
 
-var subscribers = (function() {
-    var subscribers = [];
-
-    return {
-        add: function(token, latitude, longitude) {
-            this.remove(token);
-            subscribers.push({
-                token: token,
-                latitude: latitude,
-                longitude: longitude
-            });
-        },
-
-        remove: function(token) {
-            if (this.contains(token)) {
-                subscribers = _.reject(subscribers, function(el) {
-                    return el.token === token;
-                });
-                return true;
-            } else {
-                return false;
-            }
-        },
-
-        contains: function(token) {
-            var searchProperty = { token: token };
-            return !! _.findWhere(subscribers, searchProperty);
-        }
-    };
-})();
+var subscribers = new subscriberList();
 
 // Subscribe to updates on lightningmaps and multicast them over to our
 // subscribers.
