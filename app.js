@@ -11,12 +11,7 @@ var subscribers = (function() {
 
     return {
         add: function(token, latitude, longitude) {
-            var searchProperty = { token: token };
-            if (_.findWhere(subscribers, searchProperty)) {
-                subscribers = _.reject(subscribers, function(el) {
-                    return el.token === token;
-                });
-            }
+            this.remove(token);
             subscribers.push({
                 token: token,
                 latitude: latitude,
@@ -25,8 +20,7 @@ var subscribers = (function() {
         },
 
         remove: function(token) {
-            var searchProperty = { token: token };
-            if (_.findWhere(subscribers, searchProperty)) {
+            if (this.contains(token)) {
                 subscribers = _.reject(subscribers, function(el) {
                     return el.token === token;
                 });
@@ -34,6 +28,11 @@ var subscribers = (function() {
             } else {
                 return false;
             }
+        },
+
+        contains: function(token) {
+            var searchProperty = { token: token };
+            return !! _.findWhere(subscribers, searchProperty);
         }
     };
 })();
