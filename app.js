@@ -1,5 +1,4 @@
-var _              = require('underscore'),
-    async          = require('async'),
+var async          = require('async'),
     express        = require('express'),
     bodyParser     = require('body-parser'),
     morgan         = require('morgan'),
@@ -15,7 +14,9 @@ var subscribers = new subscriberList();
 var lightningmaps = new lightningMaps();
 lightningmaps.on('message', function(message) {
     var data = JSON.parse(message);
-    async.each(subscribers, _.partial(push.sendStrikesToSubscriber, data));
+    async.each(subscribers.all(), function(subscriber) {
+        return push.sendStrikesToSubscriber(data, subscriber);
+    });
 });
 
 // API for clients to subscribe to updates
