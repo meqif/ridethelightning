@@ -4,7 +4,7 @@
   "description": "Bridge between lightningmaps.org and a set of subscribers on Pushbullet",
   "main": "app.js",
   "scripts": {
-    "start": "node ./app.js",
+    "start": "node bin/www",
     "test": "NODE_ENV=testing mocha",
     "test-cover": "NODE_ENV=testing istanbul cover _mocha",
     "coveralls": "NODE_ENV=testing istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
