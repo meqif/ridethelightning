@@ -13,7 +13,7 @@ describe('Events from lightningmaps', function() {
         });
 
         // Emit an event immediately after registering event listener
-        var lightningMapsStub = function () {
+        var lightningMapsStub = function() {
             var mock = new lightningMaps;
             this.on = function(event, callback) {
                 mock.on(event, callback);
