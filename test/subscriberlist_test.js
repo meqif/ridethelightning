@@ -9,6 +9,7 @@ describe('SubscriberList', function() {
 
         it('contains nothing', function() {
             assert.isFalse(subs.contains(token));
+            assert.lengthOf(subs.all(), 0);
         });
 
         it('cannot remove anything', function() {
@@ -31,6 +32,10 @@ describe('SubscriberList', function() {
 
         it('contains the entry', function() {
             assert.isTrue(subs.contains(token));
+        });
+
+        it('contains only the entry', function() {
+            assert.lengthOf(subs.all(), 1);
         });
 
         it('can remove the entry', function() {
