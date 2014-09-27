@@ -3,10 +3,10 @@ var mocha          = require('mocha'),
     SubscriberList = require('../lib/subscriberlist');
 
 describe('SubscriberList', function() {
-    describe('empty', function() {
-        var subs = new SubscriberList();
-        var token = 'notSoRandomIndentifier';
+    var subs = SubscriberList;
+    var token = 'notSoRandomIndentifier';
 
+    describe('empty', function() {
         it('contains nothing', function() {
             assert.isFalse(subs.contains(token));
             assert.lengthOf(subs.all(), 0);
@@ -23,9 +23,6 @@ describe('SubscriberList', function() {
     });
 
     describe('with an entry', function() {
-        var subs = new SubscriberList();
-        var token = 'notSoRandomIndentifier';
-
         before(function() {
             subs.add(token);
         });

@@ -6,15 +6,13 @@ var async          = require('async'),
     push           = require('./lib/push'),
     subscriberList = require('./lib/subscriberlist');
 
-var subscribers = new subscriberList();
-
 // Subscribe to updates on lightningmaps and multicast them over to our
 // subscribers.
 
 var lightningmaps = new lightningMaps();
 lightningmaps.on('message', function(message) {
     var data = JSON.parse(message);
-    async.each(subscribers.all(), function(subscriber) {
+    async.each(subscriberList.all(), function(subscriber) {
         return push.sendStrikesToSubscriber(data, subscriber);
     });
 });
@@ -42,7 +40,7 @@ router.post('/subscribe', function(req, res) {
             req.param('location').longitude;
 
     if (hasTokenAndLocation) {
-        subscribers.add(
+        subscriberList.add(
             req.param('token'),
             req.param('location').latitude,
             req.param('location').longitude
@@ -56,7 +54,7 @@ router.post('/subscribe', function(req, res) {
 // Handle unsubscriptions
 router.post('/unsubscribe', function(req, res) {
     if (req.param('token')) {
-        if (subscribers.remove(req.param('token'))) {
+        if (subscriberList.remove(req.param('token'))) {
             res.json({message: 'Successfully unsubscribed'});
         } else {
             res.status(400).json({message: 'Subscriber does not exist'});
