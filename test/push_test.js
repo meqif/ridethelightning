@@ -1,4 +1,3 @@
-var mocha = require('mocha');
 var nock = require('nock');
 var push = require('../lib/push');
 

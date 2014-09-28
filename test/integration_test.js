@@ -1,4 +1,3 @@
-var mocha = require('mocha');
 var sinon = require('sinon');
 var mockery = require('mockery');
 var lightningMaps = require('../lib/lightningmaps');
@@ -14,7 +13,7 @@ describe('Events from lightningmaps', function() {
 
         // Emit an event immediately after registering event listener
         var lightningMapsStub = function() {
-            var mock = new lightningMaps;
+            var mock = new lightningMaps();
             this.on = function(event, callback) {
                 mock.on(event, callback);
                 var response = { token: 'foo' };
@@ -35,7 +34,7 @@ describe('Events from lightningmaps', function() {
 
     it('are properly iterated through', function() {
         asyncMock.expects('each').once().withArgs([]);
-        var app = require('../app');
+        require('../app');
         asyncMock.verify();
     });
 });

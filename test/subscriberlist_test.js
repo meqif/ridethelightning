@@ -1,5 +1,4 @@
-var mocha          = require('mocha'),
-    assert         = require('chai').assert,
+var assert         = require('chai').assert,
     SubscriberList = require('../lib/subscriberlist');
 
 describe('SubscriberList', function() {
