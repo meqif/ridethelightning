@@ -29,6 +29,7 @@ describe('SubscriberList', function() {
 
         it('contains the entry', function() {
             assert.isTrue(subs.contains(token));
+            assert.propertyVal(subs.find(token), 'token', token);
         });
 
         it('contains only the entry', function() {
@@ -37,6 +38,7 @@ describe('SubscriberList', function() {
 
         it('can remove the entry', function() {
             assert.isTrue(subs.remove(token));
+            assert.isFalse(subs.contains(token));
         });
     });
 });
