@@ -32,35 +32,44 @@ app.use(bodyParser.json());
 
 var router = express.Router();
 
+router.use(function(req, res, next) {
+    var token = req.param('token');
+
+    if (!token) {
+        res.status(400).json({message: 'Invalid request body'}).end();
+    } else {
+        req.token = token;
+        req.subscriber = SubscriberList.find(token);
+        next();
+    }
+});
+
 // Handle subscriptions
 router.post('/subscribe', function(req, res) {
-    var hasTokenAndLocation = req.param('token') &&
+    var hasTokenAndLocation = req.token &&
             req.param('location') &&
             req.param('location').latitude &&
             req.param('location').longitude;
 
     if (hasTokenAndLocation) {
         SubscriberList.add(
-            req.param('token'),
+            req.token,
             req.param('location').latitude,
             req.param('location').longitude
         );
         res.json({message: 'Successfully subscribed'});
     } else {
-        res.status(400).json({error: 'Invalid request body'});
+        res.status(400).json({message: 'Invalid request body'});
     }
 });
 
 // Handle unsubscriptions
 router.post('/unsubscribe', function(req, res) {
-    if (req.param('token')) {
-        if (SubscriberList.remove(req.param('token'))) {
-            res.json({message: 'Successfully unsubscribed'});
-        } else {
-            res.status(400).json({message: 'Subscriber does not exist'});
-        }
+    if (req.subscriber) {
+        SubscriberList.remove(req.token);
+        res.json({message: 'Successfully unsubscribed'});
     } else {
-        res.status(400).json({message: 'Invalid request body'});
+        res.status(400).json({message: 'Subscriber does not exist'});
     }
 });
 

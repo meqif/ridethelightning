@@ -18,6 +18,14 @@ describe('POST /api/v1/subscribe', function() {
             .expect(200, done);
     });
 
+    it('does not add a new subscriber without location', function(done) {
+        request(app)
+            .post('/api/v1/subscribe')
+            .send({ token: 'bar'})
+            .expect('Content-Type', /json/)
+            .expect(400, done);
+    });
+
     describe('with a populated subscriber list', function() {
         request(app)
             .post('/api/v1/subscribe')
