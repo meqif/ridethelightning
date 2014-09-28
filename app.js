@@ -46,12 +46,11 @@ router.use(function(req, res, next) {
 
 // Handle subscriptions
 router.post('/subscribe', function(req, res) {
-    var hasTokenAndLocation = req.token &&
-            req.param('location') &&
+    var hasLocation = req.param('location') &&
             req.param('location').latitude &&
             req.param('location').longitude;
 
-    if (hasTokenAndLocation) {
+    if (hasLocation) {
         SubscriberList.add(
             req.token,
             req.param('location').latitude,
