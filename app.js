@@ -45,21 +45,21 @@ router.use(function(req, res, next) {
 });
 
 // Handle subscriptions
-router.post('/subscribe', function(req, res) {
+router.post('/subscribe', function(req, res, next) {
     var hasLocation = req.param('location') &&
             req.param('location').latitude &&
             req.param('location').longitude;
 
     if (hasLocation) {
-        SubscriberList.add(
-            req.token,
-            req.param('location').latitude,
-            req.param('location').longitude
-        );
-        res.json({message: 'Successfully subscribed'});
+        req.latitude = req.param('location').latitude;
+        req.longitude = req.param('location').longitude;
+        next();
     } else {
-        res.status(400).json({message: 'Invalid request body'});
+        res.status(400).json({message: 'Invalid request body'}).end();
     }
+}, function(req, res) {
+    SubscriberList.add(req.token, req.latitude, req.longitude);
+    res.json({message: 'Successfully subscribed'});
 });
 
 // Handle unsubscriptions
