@@ -3,7 +3,7 @@ var mockery = require('mockery');
 var lightningMaps = require('../lib/lightningmaps');
 
 describe('Events from lightningmaps', function() {
-    var asyncMock;
+    var pusherMock;
 
     before(function() {
         mockery.enable({
@@ -23,9 +23,13 @@ describe('Events from lightningmaps', function() {
         };
         mockery.registerMock('./lib/lightningmaps', lightningMapsStub);
 
-        var async = require('async');
-        asyncMock = sinon.mock(async);
-        mockery.registerMock('async', async);
+        // Add a test subscriber
+        var SubscriberList = require('../lib/subscriberlist');
+        SubscriberList.add('aRandomToken', 0, 0);
+
+        // Stub the pusher
+        var pusher = require('../lib/push');
+        pusherMock = sinon.mock(pusher);
     });
 
     after(function() {
@@ -33,8 +37,7 @@ describe('Events from lightningmaps', function() {
     });
 
     it('are properly iterated through', function() {
-        asyncMock.expects('each').once().withArgs([]);
         require('../app');
-        asyncMock.verify();
+        pusherMock.verify();
     });
 });
